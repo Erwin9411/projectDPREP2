@@ -6,7 +6,7 @@
 all: data_cleaned results paper
 paper: gen/paper/output/paper.pdf
 data_cleaned: gen/data-preparation/output/data_cleaned.RData
-results: gen/analysis/output/model_results.RData
+# results: gen/analysis/output/model_results.RData
 .PHONY: clean
 
 # INDIVIDUAL RECIPES
@@ -31,16 +31,17 @@ gen/analysis/output/model_results.RData: gen/data-preparation/output/data_cleane
 	Rscript src/analysis/analyze.R
 
 # Clean data
-gen/data-preparation/output/data_cleaned.RData: data/dataset1/dataset1.csv \
-						data/dataset2/dataset2.csv \
-						src/data-preparation/merge_data.R \
+gen/data-preparation/output/data_cleaned.RData: data/listings2016/june.csv \
+						data/listings2016/july.csv \ 
+						data/listings2016/august.csv \
+						#src/data-preparation/merge_data.R \
 						src/data-preparation/clean_data.R 
 	Rscript src/data-preparation/update_input.R
-	Rscript src/data-preparation/merge_data.R
-	Rscript src/data-preparation/clean_data.R 
+	#Rscript src/data-preparation/merge_data.R
+	#Rscript src/data-preparation/clean_data.R 
 
 # Download data
-data/dataset1/dataset1.csv data/dataset2/dataset2.csv: src/data-preparation/download_data.R 
+data/listings2016/june.csv data/listings2016/july.csv data/listings2016/august.csv: src/data-preparation/download_data.R 
 	Rscript src/data-preparation/download_data.R 
 
 # Clean-up: Deletes temporary files
