@@ -1,6 +1,22 @@
 # Copy the raw data into input folder 
-# This step really depends no how files are shared across the different stages (e.g. if whole pipeline
-# is on a single machine, could directly access data from data directory)
-file.copy("./data/listings2016/june.csv","./gen/data-preparation/input/june2016.csv")
-file.copy("./data/listings2016/july.csv","./gen/data-preparation/input/july2016.csv")
-file.copy("./data/listings2016/august.csv", "./gen/data-preparation/input/august2016.csv")
+library(tibble)
+library(readr)
+data_amazon <- read.csv("C:/Users/prive/projectDPREP2/data/amazon/data_amazon.csv", header = FALSE, sep = ",", fileEncoding="utf8")
+
+data_bol <- read.csv("C:/Users/prive/projectDPREP2/data/bol/data_bol.csv", header = FALSE, sep = ",", fileEncoding = "utf8")
+colnames(data_bol) <- #c("title",
+                        #"price",
+                        #"star_rating",
+                        #"date")
+
+colnames(data_amazon) <- #c("title",
+                           #"price",
+                           #"tech",
+                           #"other",
+                           #"extra")
+
+write.csv(data_bol,file="../../gen/data-preparation/input/data_bol.csv", row.names = FALSE)
+write.csv(data_amazon,file="../../gen/data-preparation/input/data_amazon.csv", row.names = FALSE)
+
+
+
