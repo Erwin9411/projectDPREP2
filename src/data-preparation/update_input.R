@@ -3,6 +3,9 @@ library(tibble)
 library(readr)
 library(stringr)
 library(tidyverse)
+library(tidyr)
+install.packages("naniar")
+library(naniar)
 
 data_amazon <- read.csv("../../data/amazon/data_amazon_phones_20210323.csv", header = FALSE, sep = ",", fileEncoding="utf8")
 
@@ -39,25 +42,33 @@ data_bol_column$price = substr(data_bol_column$price,1,nchar(data_bol_column$pri
 data_bol_column$model = substr(data_bol_column$model,1,nchar(data_bol_column$model)-1)
 data_bol_column$brand = substr(data_bol_column$brand,1,nchar(data_bol_column$brand)-1)
 data_bol_column$title = substr(data_bol_column$title,1,nchar(data_bol_column$title)-1)
-
 bol_df <- data_bol_column
 
-#fix star ratings
+#create star rating and review columns
 
 #split by (
-#split_rating <- bol_df$star_rating()
+split_rating <- separate(data = bol_df, col = star_rating, into = c("rating", "review"), sep = "\\(")
+
+#give number of reviews and star ratings
+split_rating$review <- gsub("reviews)", "", split_rating$review)
+split_rating$review <- gsub("review)", "", split_rating$review)
+split_rating$review <- gsub("/\n", "", split_rating$review)
+split_rating$review <- substr(split_rating$review,1,nchar(split_rating$review)-3)
+split_rating$rating <- substr(split_rating$rating, 3, 5)
+split_rating$rating <- replace
+split_rating$rating <- gsub(".nS", "Text", split_rating$rating)
+split_rating$rating[ split_rating$rating == "Text" ] <- NA
+bol_dataset <- split_rating
+
+#change class
+bol_dataset$rating = as.numeric(as.character(bol_dataset$rating))
+bol_dataset$review = as.numeric(as.character(bol_dataset$review))
+bol_dataset$price <- gsub("-", "00", bol_dataset$price)
+bol_dataset$price <- gsub(",", ".", bol_dataset$price)
+bol_dataset$price = as.numeric(as.character(bol_dataset$price))
 
 
-#schrijf een review = 0
-
-
-#split star scores
-
-
-
-
-
-
+#remove wrong observations
 
 
 
