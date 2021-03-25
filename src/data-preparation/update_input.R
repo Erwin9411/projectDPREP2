@@ -4,8 +4,7 @@ library(readr)
 library(stringr)
 library(tidyverse)
 library(tidyr)
-#install.packages("naniar")
-library(naniar)
+library(dplyr)
 
 data_bol <- read.csv("../../data/bol/data_bol.csv", header = FALSE, sep = " ", fileEncoding = "utf8", flush = TRUE)
 
@@ -71,17 +70,12 @@ bol_dataset$price = as.numeric(as.character(bol_dataset$price))
 bol_dataset$date = as.Date(bol_dataset$date)
 
 #Remove phones with only NA's
-bol_dataset_correct  <- bol_dataset [!(is.na(bol_dataset$price)) | !(is.na(bol_dataset$review)) | !(is.na(bol_dataset$rating)) ,]
+bol_dataset <- bol_dataset [!(is.na(bol_dataset$price)) | !(is.na(bol_dataset$review)) | !(is.na(bol_dataset$rating)) ,]
 
-brands_bol <- data.frame(unique(bol_dataset_correct$brand))
-colnames(brands_bol) <- c("brand")
+
 
 ##################AMAZON######################
-library(tibble)
-library(readr)
-library(tidyr)
-library(dplyr)
-library(NLP)
+
 data_amazon <- read.csv("../../data/amazon/data_amazon_phones_202103.csv", header = FALSE, sep = " ", fileEncoding="utf8", flush = TRUE)
 
 colnames(data_amazon) <- c("title_name",
@@ -117,9 +111,6 @@ data_amazon_column$brand <- tolower(data_amazon_column$brand)
 #deleting duplicates
 data_amazon_column <- data_amazon_column %>% filter(!duplicated(data_amazon_column))
 
-#removing rows when price, start_rating and review_count is NA
-data_amazon_column  <- data_amazon_column [!(is.na(data_amazon_column$price)) | !(is.na(data_amazon_column$review_count)) | !(is.na(data_amazon_column$star_rating)) ,]
-
 # change the null to NA's 
 data_amazon_column$price[ data_amazon_column$price == "null" ] <- NA
 data_amazon_column$review_count[ data_amazon_column$review_count == "null" ] <- NA
@@ -127,6 +118,9 @@ data_amazon_column$star_rating[ data_amazon_column$star_rating == "Vorige pagina
 data_amazon_column$star_rating[ data_amazon_column$star_rating == "null" ] <- NA
 data_amazon_column$star_rating[ data_amazon_column$star_rating == "Previous page" ] <- NA
 data_amazon_column$star_rating[ data_amazon_column$star_rating == "Terug" ] <- NA
+
+#removing rows when price, start_rating and review_count is NA
+data_amazon_column  <- data_amazon_column [!(is.na(data_amazon_column$price)) | !(is.na(data_amazon_column$review_count)) | !(is.na(data_amazon_column$star_rating)) ,]
 
 #remove unnecessary information in cells
 data_amazon_column$price <- gsub("\\u20ac", "", data_amazon_column$price)
@@ -151,17 +145,26 @@ data_amazon_column$review_count <- as.numeric(data_amazon_column$review_count)
 
 #transforming date to date
 data_amazon_column$date <- as.Date(data_amazon_column$date,format="%Y-%m-%d")
+amazon_dataset <- data_amazon_column
 
-#Joining the both datasets
+#Joining the both datasets ########
+brands_bol <- data.frame(unique(bol_dataset$brand))
+colnames(brands_bol) <- c("brand")
+
 amazon_data_comparison <- data_amazon_column %>% inner_join(brands_bol, data_amazon_column, by = "brand")
 
+df_amazon_brands <- data.frame(unique(amazon_data_comparison$brand))
+colnames(df_amazon_brands) <- c("brand")
 
-#data.table
-#fread() replaces read.table
-#data_bol = data.frame(fread(...))
+bol_comparison_data <- bol_dataset %>% inner_join(df_amazon_brands, bol_dataset, by = "brand")
 
-write.csv(data_bol,file="../../gen/data-preparation/input/data_bol.csv", row.names = FALSE)
-write.csv(data_amazon,file="../../gen/data-preparation/input/data_amazon.csv", row.names = FALSE)
 
+
+###### Save data files ######
+#write.csv(bol_comparison_data,file="../../gen/data-preparation/input/comparison_data_bol.csv", row.names = FALSE)
+write.csv(bol_dataset,file="../../gen/data-preparation/input/data_bol.csv", row.names = FALSE)
+
+#write.csv(amazon_data_comparison,file="../../gen/data-preparation/input/comparison_data_amazon.csv", row.names = FALSE)
+write.csv(amazon_dataset,file="../../gen/data-preparation/input/data_amazon.csv", row.names = FALSE)
 
 
