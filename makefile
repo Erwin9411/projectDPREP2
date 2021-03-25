@@ -5,7 +5,7 @@
 # OVERALL BUILD RULES
 all: data_cleaned results paper
 paper: gen/paper/output/paper.pdf
-data_cleaned: gen/data-preparation/output/data_cleaned.RData
+data_cleaned: gen/data-preparation/output/data_bol_comparison.RData gen/data-preparation/output/data_amazon_comparison.RData
 results: gen/analysis/output/model_results.RData
 .PHONY: clean
 
@@ -31,15 +31,14 @@ gen/analysis/output/model_results.RData: gen/data-preparation/output/data_cleane
 	Rscript src/analysis/analyze.R
 
 # Clean data
-gen/data-preparation/output/data_cleaned.RData: data/data_bol_phones_20210323 \
-						data/amazon/data_amazon.csv \
-						src/data-preparation/merge_data.R \
-						src/data-preparation/clean_data.R
+gen/data-preparation/output/data_bol_comparison.RData gen/data-preparation/output/data_amazon_comparison.RData: data/bol/data_bol.csv \
+						data/amazon/data_amazon_phones_202103.csv \
+						src/data-preparation/clean_data.R \
+						src/data-preparation/join_data.R						
 	Rscript src/data-preparation/update_input.R
-	Rscript src/data-preparation/merge_data.R
 	Rscript src/data-preparation/clean_data.R
-
-
+	Rscript src/data-preparation/join_data.R
+	
 
 # Clean-up: Deletes temporary files
 # Note: Using R to delete files keeps platform-independence.
