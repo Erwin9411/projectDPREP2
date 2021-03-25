@@ -4,7 +4,7 @@ library(readr)
 library(stringr)
 library(tidyverse)
 library(tidyr)
-install.packages("naniar")
+#install.packages("naniar")
 library(naniar)
 
 data_amazon <- read.csv("../../data/amazon/data_amazon_phones_20210323.csv", header = FALSE, sep = ",", fileEncoding="utf8")
@@ -30,9 +30,15 @@ colnames(data_bol) <- c("title_name",
                         "EAN",
                         "date_name",
                         "date")
+#filter inbouwen
+data_bol_column <- data_bol %>% filter(grepl("brand:", data_bol$brand_name))
 
 #clean columns
-data_bol_column <- subset(data_bol, select = -c(title_name, brand_name, model_name, price_name, star_rating_name, EAN_name, date_name) )
+data_bol_column <- subset(data_bol_column, select = -c(title_name, brand_name, model_name, price_name, star_rating_name, EAN_name, date_name) )
+
+#brands to lower case
+data_bol_column$brand <- tolower(data_bol_column$brand)
+
 
 #clean added comma's in all elements
 data_bol_column$date = substr(data_bol_column$date,1,nchar(data_bol_column$date)-1)
@@ -45,7 +51,6 @@ data_bol_column$title = substr(data_bol_column$title,1,nchar(data_bol_column$tit
 bol_df <- data_bol_column
 
 #create star rating and review columns
-
 #split by (
 split_rating <- separate(data = bol_df, col = star_rating, into = c("rating", "review"), sep = "\\(")
 
@@ -58,6 +63,7 @@ split_rating$rating <- substr(split_rating$rating, 3, 5)
 split_rating$rating <- replace
 split_rating$rating <- gsub(".nS", "Text", split_rating$rating)
 split_rating$rating[ split_rating$rating == "Text" ] <- NA
+split_rating[ split_rating == "null" ] <- NA
 bol_dataset <- split_rating
 
 #change class
@@ -66,10 +72,12 @@ bol_dataset$review = as.numeric(as.character(bol_dataset$review))
 bol_dataset$price <- gsub("-", "00", bol_dataset$price)
 bol_dataset$price <- gsub(",", ".", bol_dataset$price)
 bol_dataset$price = as.numeric(as.character(bol_dataset$price))
+bol_dataset$date = as.Date(bol_dataset$date)
 
+#Remove phones with only NA's
+bol_dataset_correct  <- bol_dataset [!(is.na(bol_dataset$price)) | !(is.na(bol_dataset$review)) | !(is.na(bol_dataset$rating)) ,]
 
-#remove wrong observations
-
+df_brand_bol <- data.frame(unique(bol_dataset_correct$brand))
 
 
 ##################AMAZON######################
@@ -139,6 +147,7 @@ data_amazon_column$review_count <- as.integer(data_amazon_column$review_count)
 
 #transforming date to date
 data_amazon_column$date <- as.Date(data_amazon_column$date,format="%Y-%m-%d")
+
 
 #data.table
 #fread() replaces read.table
