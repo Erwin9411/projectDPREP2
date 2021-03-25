@@ -7,13 +7,9 @@ library(tidyr)
 #install.packages("naniar")
 library(naniar)
 
-data_amazon <- read.csv("../../data/amazon/data_amazon_phones_20210323.csv", header = FALSE, sep = ",", fileEncoding="utf8")
-
 data_bol <- read.csv("../../data/bol/data_bol.csv", header = FALSE, sep = " ", fileEncoding = "utf8", flush = TRUE)
 
 ##################bol.com######################
-
-
 
 #give column names
 colnames(data_bol) <- c("title_name",
@@ -77,8 +73,8 @@ bol_dataset$date = as.Date(bol_dataset$date)
 #Remove phones with only NA's
 bol_dataset_correct  <- bol_dataset [!(is.na(bol_dataset$price)) | !(is.na(bol_dataset$review)) | !(is.na(bol_dataset$rating)) ,]
 
-df_brand_bol <- data.frame(unique(bol_dataset_correct$brand))
-
+brands_bol <- data.frame(unique(bol_dataset_correct$brand))
+colnames(brands_bol) <- c("brand")
 
 ##################AMAZON######################
 library(tibble)
@@ -121,6 +117,9 @@ data_amazon_column$brand <- tolower(data_amazon_column$brand)
 #deleting duplicates
 data_amazon_column <- data_amazon_column %>% filter(!duplicated(data_amazon_column))
 
+#removing rows when price, start_rating and review_count is NA
+data_amazon_column  <- data_amazon_column [!(is.na(data_amazon_column$price)) | !(is.na(data_amazon_column$review_count)) | !(is.na(data_amazon_column$star_rating)) ,]
+
 # change the null to NA's 
 data_amazon_column$price[ data_amazon_column$price == "null" ] <- NA
 data_amazon_column$review_count[ data_amazon_column$review_count == "null" ] <- NA
@@ -128,11 +127,6 @@ data_amazon_column$star_rating[ data_amazon_column$star_rating == "Vorige pagina
 data_amazon_column$star_rating[ data_amazon_column$star_rating == "null" ] <- NA
 data_amazon_column$star_rating[ data_amazon_column$star_rating == "Previous page" ] <- NA
 data_amazon_column$star_rating[ data_amazon_column$star_rating == "Terug" ] <- NA
-
-#delete incomplete rows
-#data_amazon_column <- data_amazon_column %>% filter(grepl("\\u20ac", data_amazon_column$price))
-#data_amazon_column <- data_amazon_column %>% filter(grepl(" beoordelingen", data_amazon_column$review_count))
-#data_amazon_column <- data_amazon_column %>% filter(grepl(" van 5 sterren", data_amazon_column$star_rating))
 
 #remove unnecessary information in cells
 data_amazon_column$price <- gsub("\\u20ac", "", data_amazon_column$price)
@@ -142,54 +136,6 @@ data_amazon_column$star_rating <- gsub(" van 5 sterren", "", data_amazon_column$
 
 #improving data quality
 data_amazon_column$brand <- gsub("de nokia store openen", "nokia", data_amazon_column$brand)
-
-is.String(data_amazon_column$brand)
-data_amazon_column$brand <- as.String(data_amazon_column$brand)
-
-# removing brands that sells smartphone parts
-data_amazon_column <- data_amazon_column$brand %>% filter("samsung", "apple", "alcatel", "motorola", "oppo", "nokia")
-data_amazon_column <- data_amazon_column %>% filter(!grepl("cxc", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("eason", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("antonia", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("yangly", data_amazon_column$brand))
-
-#removing brands that sells regular phones and no smartphones
-data_amazon_column <- data_amazon_column %>% filter(!grepl("sxhlseller", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("haowecib", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("fockety", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("demeras", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("zartpmo", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("Vipxyc", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("fegayu", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("fotabpyti", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("fastkk", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("bhdd", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("crisis", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("bter", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("anggrek", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("yunir", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("cuyt", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("dauerhaft", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("01", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("143", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("167", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("acr", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("agatige", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("alinory", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("amazfit", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("amonida", data_amazon_column$brand))
-
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-data_amazon_column <- data_amazon_column %>% filter(!grepl("aftertech", data_amazon_column$brand))
-
-
 
 #transforming price and starts to numeric
 data_amazon_column$price <- gsub("[.]", "", data_amazon_column$price)
@@ -204,12 +150,10 @@ data_amazon_column$review_count <- gsub("[.]", "", data_amazon_column$review_cou
 data_amazon_column$review_count <- as.numeric(data_amazon_column$review_count)
 
 #transforming date to date
-data_amazon_column$date <- as.Date(data_aNmazon_column$date,format="%Y-%m-%d")
+data_amazon_column$date <- as.Date(data_amazon_column$date,format="%Y-%m-%d")
 
-#removing rows when price, start_rating and review_count is NA
-data_amazon_column  <- data_amazon_column [!(is.na(data_amazon_column$price)) | !(is.na(data_amazon_column$review_count)) | !(is.na(data_amazon_column$star_rating)) ,]
-
-
+#Joining the both datasets
+amazon_data_comparison <- data_amazon_column %>% inner_join(brands_bol, data_amazon_column, by = "brand")
 
 
 #data.table
