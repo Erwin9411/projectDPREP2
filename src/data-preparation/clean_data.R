@@ -131,6 +131,13 @@ data_amazon_column$star_rating <- gsub(" van 5 sterren", "", data_amazon_column$
 
 #improving data quality
 data_amazon_column$brand <- gsub("de nokia store openen", "nokia", data_amazon_column$brand)
+data_amazon_column$brand <- gsub("nokia c2-01", "nokia", data_amazon_column$brand)
+data_amazon_column$brand <- gsub("lg g6 blue 32gb ss", "lg", data_amazon_column$brand)
+data_amazon_column$brand <- gsub("lg electronics", "lg", data_amazon_column$brand)
+data_amazon_column$brand <- gsub("motorola mobility", "motorola", data_amazon_column$brand)
+data_amazon_column$brand <- gsub("samsung.", "samsung", data_amazon_column$brand)
+data_amazon_column$brand <- gsub("oppo digital", "oppo", data_amazon_column$brand)
+data_amazon_column$brand <- gsub("smart phone", "smartphone", data_amazon_column$brand)
 
 #transforming price and starts to numeric
 data_amazon_column$price <- gsub("[.]", "", data_amazon_column$price)
