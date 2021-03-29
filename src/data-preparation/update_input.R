@@ -1,5 +1,9 @@
 # Copy the raw data into input folder
 library(readr)
+####### Create Gen directory ######
+dir.create("./gen/data-preparation/input", recursive = TRUE)
+dir.create("./gen/data-preparation/temp", recursive = TRUE)
+dir.create("./gen/data-preparation/output", recursive = TRUE)
 
 ###### Read in data ################
 data_bol <- read.csv("./data/bol/data_bol.csv", header = FALSE, sep = " ", fileEncoding = "utf8", flush = TRUE)
