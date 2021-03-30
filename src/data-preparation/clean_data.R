@@ -50,30 +50,31 @@ bol_df <- data_bol_column
 
 #create star rating and review columns
 #split by (
-split_rating <- separate(data = bol_df, col = star_rating, into = c("rating", "review"), sep = "\\(")
+split_rating <- separate(data = bol_df, col = star_rating, into = c("star_rating", "review_count"), sep = "\\(")
 
 #give number of reviews and star ratings
-split_rating$review <- gsub("reviews)", "", split_rating$review)
-split_rating$review <- gsub("review)", "", split_rating$review)
-split_rating$review <- gsub("/\n", "", split_rating$review)
-split_rating$review <- substr(split_rating$review,1,nchar(split_rating$review)-3)
-split_rating$rating <- substr(split_rating$rating, 3, 5)
+split_rating$review_count <- gsub("reviews)", "", split_rating$review_count)
+split_rating$review_count <- gsub("review)", "", split_rating$review_count)
+split_rating$review_count <- gsub("/\n", "", split_rating$review_count)
+split_rating$review_count <- substr(split_rating$review_count,1,nchar(split_rating$review_count)-3)
+split_rating$star_rating <- substr(split_rating$star_rating, 3, 5)
+
 #split_rating$rating <- replace
-split_rating$rating <- gsub(".nS", "Text", split_rating$rating)
-split_rating$rating[ split_rating$rating == "Text" ] <- NA
+split_rating$star_rating <- gsub(".nS", "Text", split_rating$star_rating)
+split_rating$star_rating[ split_rating$star_rating == "Text" ] <- NA
 split_rating[ split_rating == "null" ] <- NA
 bol_dataset <- split_rating
 
 #change class
-bol_dataset$rating = as.numeric(as.character(bol_dataset$rating))
-bol_dataset$review = as.numeric(as.character(bol_dataset$review))
+bol_dataset$star_rating = as.numeric(as.character(bol_dataset$star_rating))
+bol_dataset$review_count = as.numeric(as.character(bol_dataset$review_count))
 bol_dataset$price <- gsub("-", "00", bol_dataset$price)
 bol_dataset$price <- gsub(",", ".", bol_dataset$price)
 bol_dataset$price = as.numeric(as.character(bol_dataset$price))
 bol_dataset$date = as.Date(bol_dataset$date)
 
 #Remove phones with only NA's
-bol_dataset <- bol_dataset [!(is.na(bol_dataset$price)) | !(is.na(bol_dataset$review)) | !(is.na(bol_dataset$rating)) ,]
+bol_dataset <- bol_dataset [!(is.na(bol_dataset$price)) | !(is.na(bol_dataset$review_count)) | !(is.na(bol_dataset$star_rating)) ,]
 
 
 
