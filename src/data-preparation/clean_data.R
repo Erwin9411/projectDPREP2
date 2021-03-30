@@ -39,13 +39,19 @@ data_bol_column$brand <- tolower(data_bol_column$brand)
 
 
 #clean added comma's in all elements
-data_bol_column$date = substr(data_bol_column$date,1,nchar(data_bol_column$date)-1)
-data_bol_column$EAN = substr(data_bol_column$EAN,1,nchar(data_bol_column$EAN)-1)
-data_bol_column$star_rating = substr(data_bol_column$star_rating,1,nchar(data_bol_column$star_rating)-1)
-data_bol_column$price = substr(data_bol_column$price,1,nchar(data_bol_column$price)-1)
-data_bol_column$model = substr(data_bol_column$model,1,nchar(data_bol_column$model)-1)
-data_bol_column$brand = substr(data_bol_column$brand,1,nchar(data_bol_column$brand)-1)
-data_bol_column$title = substr(data_bol_column$title,1,nchar(data_bol_column$title)-1)
+#function to do this
+remove_last_char <- function(x) {
+  substr(x,1,nchar(x)-1)
+}
+
+#actually doing it per data
+data_bol_column$date <- remove_last_char(data_bol_column$date)
+data_bol_column$EAN = remove_last_char(data_bol_column$EAN)
+data_bol_column$star_rating = remove_last_char(data_bol_column$star_rating)
+data_bol_column$price = remove_last_char(data_bol_column$price)
+data_bol_column$model = remove_last_char(data_bol_column$model)
+data_bol_column$brand = remove_last_char(data_bol_column$brand)
+data_bol_column$title = remove_last_char(data_bol_column$title)
 bol_df <- data_bol_column
 
 #create star rating and review columns
@@ -99,13 +105,13 @@ colnames(data_amazon) <- c("title_name",
 data_amazon_column <- subset(data_amazon, select = -c(title_name, brand_name, review_count_name, price_name, star_rating_name, asin_name, date_name))
 
 #removing last commas
-data_amazon_column$title = substr(data_amazon_column$title,1,nchar(data_amazon_column$title)-1)
-data_amazon_column$brand = substr(data_amazon_column$brand,1,nchar(data_amazon_column$brand)-1)
-data_amazon_column$price = substr(data_amazon_column$price,1,nchar(data_amazon_column$price)-1)
-data_amazon_column$star_rating = substr(data_amazon_column$star_rating,1,nchar(data_amazon_column$star_rating)-1)
-data_amazon_column$review_count = substr(data_amazon_column$review_count,1,nchar(data_amazon_column$review_count)-1)
-data_amazon_column$asin = substr(data_amazon_column$asin,1,nchar(data_amazon_column$asin)-1)
-data_amazon_column$date = substr(data_amazon_column$date,1,nchar(data_amazon_column$date)-1)
+data_amazon_column$title = remove_last_char(data_amazon_column$title)
+data_amazon_column$brand = remove_last_char(data_amazon_column$brand )
+data_amazon_column$price = remove_last_char(data_amazon_column$price)
+data_amazon_column$star_rating = remove_last_char(data_amazon_column$star_rating)
+data_amazon_column$review_count = remove_last_char(data_amazon_column$review_count)
+data_amazon_column$asin = remove_last_char(data_amazon_column$asin)
+data_amazon_column$date = remove_last_char(data_amazon_column$date)
 
 #transforming all to lower capitals
 data_amazon_column$brand <- tolower(data_amazon_column$brand)
