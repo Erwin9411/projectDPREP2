@@ -83,7 +83,6 @@ bol_dataset$date = as.Date(bol_dataset$date)
 bol_dataset <- bol_dataset [!(is.na(bol_dataset$price)) | !(is.na(bol_dataset$review_count)) | !(is.na(bol_dataset$star_rating)) ,]
 
 
-
 ##################AMAZON######################
 
 colnames(data_amazon) <- c("title_name",
@@ -122,10 +121,17 @@ data_amazon_column <- data_amazon_column %>% filter(!duplicated(data_amazon_colu
 # change the null to NA's 
 data_amazon_column$price[ data_amazon_column$price == "null" ] <- NA
 data_amazon_column$review_count[ data_amazon_column$review_count == "null" ] <- NA
-data_amazon_column$star_rating[ data_amazon_column$star_rating == "Vorige pagina gerelateerde Sponsored Products"] <- NA
-data_amazon_column$star_rating[ data_amazon_column$star_rating == "null" ] <- NA
-data_amazon_column$star_rating[ data_amazon_column$star_rating == "Previous page" ] <- NA
-data_amazon_column$star_rating[ data_amazon_column$star_rating == "Terug" ] <- NA
+
+#change wrong observations to NA's for star_rating
+list_star_rating <- c("Vorige pagina gerelateerde Sponsored Products", "null", "Previous page", "Terug")
+
+star_rating_to_NA <- function(x) {
+  ret = x
+  for (i in list_star_rating) {ret [ ret == i ] <- NA} 
+  return(ret)
+}
+
+data_amazon_column$star_rating <- star_rating_to_NA(data_amazon_column$star_rating)
 
 #removing rows when price, start_rating and review_count is NA
 data_amazon_column  <- data_amazon_column [!(is.na(data_amazon_column$price)) | !(is.na(data_amazon_column$review_count)) | !(is.na(data_amazon_column$star_rating)) ,]
