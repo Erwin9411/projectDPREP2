@@ -1,7 +1,7 @@
 # Load saved data
 
-data_bol <- read.csv("./gen/data-preparation/input/data_bol.csv", header = TRUE, sep = ",", fileEncoding = "utf8", flush = TRUE)
-data_amazon <- read.csv("./gen/data-preparation/input/data_amazon.csv", header = TRUE, sep = ",", fileEncoding="utf8", flush = TRUE)
+data_bol <- read.csv("../../gen/data-preparation/input/data_bol.csv", header = TRUE, sep = ",", fileEncoding = "utf8", flush = TRUE)
+data_amazon <- read.csv("../../gen/data-preparation/input/data_amazon.csv", header = TRUE, sep = ",", fileEncoding="utf8", flush = TRUE)
 
 ################################### Clean data###############################
 library(tibble)
@@ -170,15 +170,24 @@ data_amazon_column$brand <- gsub("oppo digital", "oppo", data_amazon_column$bran
 data_amazon_column$brand <- gsub("smart phone", "smartphone", data_amazon_column$brand)
 
 #transforming price and starts to numeric
-data_amazon_column$price <- gsub("[.]", "", data_amazon_column$price)
-data_amazon_column$price <- gsub(",", ".", data_amazon_column$price)
+comma_to_dot <- function(x) {
+  ret = x 
+  gsub(ret, pattern = ",", replacement = ".", fixed = T)
+}
+dot_to_empty <- function(x){
+  ret = x 
+  gsub(ret, pattern = ".", replacement = "", fixed = T)
+}
+
+data_amazon_column$price <- dot_to_empty(data_amazon_column$price)
+data_amazon_column$price <- comma_to_dot(data_amazon_column$price)
 data_amazon_column$price <- as.numeric(data_amazon_column$price)
 
-data_amazon_column$star_rating <- gsub(",", ".", data_amazon_column$star_rating)
+data_amazon_column$star_rating <- comma_to_dot(data_amazon_column$star_rating)
 data_amazon_column$star_rating <- as.numeric(data_amazon_column$star_rating)
 
 #transforming review_count to integer
-data_amazon_column$review_count <- gsub("[.]", "", data_amazon_column$review_count)
+data_amazon_column$review_count <- dot_to_empty(data_amazon_column$review_count)
 data_amazon_column$review_count <- as.numeric(data_amazon_column$review_count)
 
 #transforming date to date
