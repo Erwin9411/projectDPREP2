@@ -1,7 +1,7 @@
 # Load saved data
 
-data_bol <- read.csv("./gen/data-preparation/input/data_bol.csv", header = TRUE, sep = ",", fileEncoding = "utf8", flush = TRUE)
-data_amazon <- read.csv("./gen/data-preparation/input/data_amazon.csv", header = TRUE, sep = ",", fileEncoding="utf8", flush = TRUE)
+data_bol <- read.csv("../../gen/data-preparation/input/data_bol.csv", header = TRUE, sep = ",", fileEncoding = "utf8", flush = TRUE)
+data_amazon <- read.csv("../../gen/data-preparation/input/data_amazon.csv", header = TRUE, sep = ",", fileEncoding="utf8", flush = TRUE)
 
 ################################### Clean data###############################
 library(tibble)
@@ -137,10 +137,27 @@ data_amazon_column$review_count <- gsub(" beoordelingen", "", data_amazon_column
 data_amazon_column$star_rating <- gsub(" van 5 sterren", "", data_amazon_column$star_rating)
 
 #improving data quality
-data_amazon_column$brand <- gsub("de nokia store openen", "nokia", data_amazon_column$brand)
-data_amazon_column$brand <- gsub("nokia c2-01", "nokia", data_amazon_column$brand)
-data_amazon_column$brand <- gsub("lg g6 blue 32gb ss", "lg", data_amazon_column$brand)
-data_amazon_column$brand <- gsub("lg electronics", "lg", data_amazon_column$brand)
+#improving nokia
+list_nokia <- c("de nokia store openen", "nokia c2-01")
+
+change_nokia <- function(x) {
+  ret = x
+  for (brand in list_nokia) ret = gsub(ret, pattern = brand, replacement = "nokia", fixed = T)
+  return(ret)
+}
+data_amazon_column$brand <- change_nokia(data_amazon_column$brand)
+
+#improving lg
+list_lg <- c("lg g6 blue 32gb ss", "lg electronics")
+
+change_lg <- function(x) {
+  ret = x
+  for (brand in list_lg) ret = gsub(ret, pattern = brand, replacement = "lg", fixed = T)
+  return(ret)
+}
+data_amazon_column$brand <- change_lg(data_amazon_column$brand)
+
+#improving other brands
 data_amazon_column$brand <- gsub("motorola mobility", "motorola", data_amazon_column$brand)
 data_amazon_column$brand <- gsub("samsung.", "samsung", data_amazon_column$brand)
 data_amazon_column$brand <- gsub("oppo digital", "oppo", data_amazon_column$brand)
