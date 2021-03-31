@@ -1,7 +1,7 @@
 # Load saved data
 
-data_bol <- read.csv("../../gen/data-preparation/input/data_bol.csv", header = TRUE, sep = ",", fileEncoding = "utf8", flush = TRUE)
-data_amazon <- read.csv("../../gen/data-preparation/input/data_amazon.csv", header = TRUE, sep = ",", fileEncoding="utf8", flush = TRUE)
+data_bol <- read.csv("./gen/data-preparation/input/data_bol.csv", header = TRUE, sep = ",", fileEncoding = "utf8", flush = TRUE)
+data_amazon <- read.csv("./gen/data-preparation/input/data_amazon.csv", header = TRUE, sep = ",", fileEncoding="utf8", flush = TRUE)
 
 ################################### Clean data###############################
 library(tibble)
