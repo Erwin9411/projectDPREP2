@@ -1,5 +1,6 @@
-# Load saved data
+dir.create("./gen/data-preparation/temp", recursive = TRUE)
 
+# Load saved data
 data_bol <- read.csv("./gen/data-preparation/input/data_bol.csv", header = TRUE, sep = ",", fileEncoding = "utf8", flush = TRUE)
 data_amazon <- read.csv("./gen/data-preparation/input/data_amazon.csv", header = TRUE, sep = ",", fileEncoding="utf8", flush = TRUE)
 

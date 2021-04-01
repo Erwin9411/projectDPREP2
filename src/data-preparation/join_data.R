@@ -1,4 +1,4 @@
-
+dir.create("./gen/data-preparation/output", recursive = TRUE)
 ####################### Joining data#####################
 #packages
 library(tibble)
