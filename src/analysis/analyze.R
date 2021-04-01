@@ -1,5 +1,8 @@
+####### Create Gen directory ######
+dir.create("./gen/analysis/output", recursive = TRUE)
+
 # load 
-load("./gen/analysis/input/data_cleaned.RData")
+load("./gen/analysis/input/complete_dataset.RData")
 
 # Estimate model 1 
 m1 <- lm(V1 ~ V3 + V4,df_cleaned)

@@ -1,5 +1,6 @@
 # Copy the raw data into input folder
 library(readr)
+
 ####### Create Gen directory ######
 dir.create("./gen/data-preparation/input", recursive = TRUE)
 
