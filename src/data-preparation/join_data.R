@@ -32,6 +32,9 @@ bol_comparison_data$asin <- c(NA)
 
 comparison_dataset_complete <- rbind(amazon_comparison_data, bol_comparison_data)
 
+col_order <- c("site", "title", "brand", "price", "star_rating", "review_count", "model", "EAN", "asin", "date")
+comparison_dataset_complete <- comparison_dataset_complete[,col_order]
+
 ################# Save data #######################
 
 save(bol_comparison_data,file="./gen/data-preparation/output/data_bol_comparison.RData")
