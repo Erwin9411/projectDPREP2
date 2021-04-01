@@ -4,7 +4,7 @@
 
 # OVERALL BUILD RULES
 all: data_cleaned results paper
-paper: gen/paper/output/paper.pdf
+#paper: gen/paper/output/paper.pdf
 data_cleaned: gen/data-preparation/output/data_bol_comparison.RData gen/data-preparation/output/data_amazon_comparison.RData
 results: gen/analysis/output/model_results.RData
 .PHONY: clean
@@ -12,20 +12,20 @@ results: gen/analysis/output/model_results.RData
 # INDIVIDUAL RECIPES
 
 # Generate paper/text
-gen/paper/output/paper.pdf: gen/paper/output/table1.tex \
-				src/paper/paper.tex
-	pdflatex -interaction=batchmode -output-directory='gen/paper/output/' 'src/paper/paper.tex'
-	pdflatex -interaction=batchmode -output-directory='gen/paper/output/' 'src/paper/paper.tex'
-	pdflatex -output-directory='gen/paper/output/' 'src/paper/paper.tex'
+#gen/paper/output/paper.pdf: gen/paper/output/table1.tex \
+				#src/paper/paper.tex
+	#pdflatex -interaction=batchmode -output-directory='gen/paper/output/' 'src/paper/paper.tex'
+	#pdflatex -interaction=batchmode -output-directory='gen/paper/output/' 'src/paper/paper.tex'
+	#pdflatex -output-directory='gen/paper/output/' 'src/paper/paper.tex'
 # Note: runs pdflatex multiple times to have correct cross-references
 
 # Generate tables
-gen/paper/output/table1.tex: gen/analysis/output/model_results.RData \
-				src/paper/tables.R
-	Rscript src/paper/tables.R
+#gen/paper/output/table1.tex: gen/analysis/output/model_results.RData \
+#				src/paper/tables.R
+#	Rscript src/paper/tables.R
 
 # Run analysis
-gen/analysis/output/model_results.RData: gen/data-preparation/output/data_cleaned.RData \
+gen/analysis/output/model_results.RData: gen/data-preparation/output/comparison_dataset_complete.RData \
 						src/analysis/analyze.R
 	Rscript src/analysis/update_input.R
 	Rscript src/analysis/analyze.R
