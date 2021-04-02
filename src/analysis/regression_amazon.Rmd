@@ -1,11 +1,11 @@
 ---
-title: "analyze_amazon"
+title: "Analyze bol.com"
 author: "Group 8"
 date: "2-4-2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup}
 #Loading packages 
 library(ggplot2)
 library(ggfortify)
@@ -14,7 +14,7 @@ library(dplyr)
 ```
 
 ## Evaluating Model Assumptions
-```{r cars}
+```{r}
 #Loading documents
 load("./gen/analysis/input/data_amazon.RData") 
 phones <- data_amazon
@@ -32,15 +32,15 @@ autoplot(
 ```
 
 ## Outlier Screening 
-```{r pressure, echo=FALSE}
+```{r}
 leverage_influence <- mdl_phones %>%
     augment() %>%
     select(star_rating, price, leverage = .hat, cooks_dist = .cooksd) %>%
-    arrange(desc(cooks_dist)) %>%
+    arrange(desc(cooks_dist)) 
 print(leverage_influence)
 ```
 ## Model Reporting 
-```{r pressure, echo=FALSE}
+```{r}
 library(stargazer)
 
 stargazer(mdl_phones,
@@ -56,7 +56,7 @@ stargazer(mdl_phones,
 ```
 
 ## Visualize Linear Relationships
-```{r pressure, echo=FALSE}
+```{r}
 library(ggplot2)
 
 ggplot(phones, aes(price, star_rating)) +
