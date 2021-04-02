@@ -1,6 +1,7 @@
 # The E-Commerce Retail Market - bol.com versus Amazon.nl
 
-__Bol.com and Amazon.nl on the Dutch E-commerce retail market. Does price influence perceived quality?__
+__Bol.com and Amazon.nl on the Dutch E-commerce retail market.
+To what extent does the product price of smartphones on bol.com and Amazon.nl have an impact on their perceived quality?__
 
 ## Motivation
 
