@@ -6,18 +6,19 @@
 all: data_cleaned analyze results 
 data_cleaned: gen/data-preparation/output/data_bol_comparison.RData gen/data-preparation/output/data_amazon_comparison.RData
 analyze: gen/analysis/input/complete_dataset.RData gen/analysis/input/data_amazon.RData gen/analysis/input/data_bol.RData
-results: gen/analysis/output/regression_all_data.html gen/analysis/output/regression_amazon.html
+results: gen/analysis/output/regression_all_data.html gen/analysis/output/regression_by_site.html 
 .PHONY: clean
 
 # INDIVIDUAL RECIPES
 
 #Inspect data
-gen/analysis/output/regression_all_data.html gen/analysis/output/regression_amazon.html: gen/analysis/input/complete_dataset.RData \
+gen/analysis/output/regression_all_data.html gen/analysis/output/regression_by_site.html: gen/analysis/input/complete_dataset.RData \
 						src/analysis/regression_all_data.Rmd \
 						gen/analysis/input/data_amazon.RData \
-						src/analysis/regression_amazon.Rmd 
+						gen/analysis/input/data_bol.RData \
+						src/analysis/regression_by_site.Rmd 
 	    R -e "rmarkdown::render('src/analysis/regression_all_data.Rmd', output_file = '../../gen/analysis/output/regression_all_data.html')"
-	    R -e "rmarkdown::render('src/analysis/regression_amazon.Rmd', output_file = '../../gen/analysis/output/regression_amazon.html')"
+	    R -e "rmarkdown::render('src/analysis/regression_by_site.Rmd', output_file = '../../gen/analysis/output/regression_by_site.html')"
         
 # Start analyse
 gen/analysis/input/complete_dataset.RData: gen/data-preparation/output/comparison_dataset_complete.RData  
