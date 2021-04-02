@@ -37,6 +37,6 @@ comparison_dataset_complete <- comparison_dataset_complete[,col_order]
 
 ################# Save data #######################
 
-save(bol_comparison_data,file="./gen/data-preparation/output/data_bol_comparison.RData")
-save(amazon_comparison_data,file="./gen/data-preparation/output/data_amazon_comparison.RData")
+save(bol_comparison_data,file="./gen/data-preparation/output/bol_comparison_data.RData")
+save(amazon_comparison_data,file="./gen/data-preparation/output/amazon_comparison_data.RData")
 save(comparison_dataset_complete,file="./gen/data-preparation/output/comparison_dataset_complete.RData")

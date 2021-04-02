@@ -1,0 +1,107 @@
+---
+title: "analyze_amazon"
+author: "Group 8"
+date: "2-4-2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#Loading packages 
+library(ggplot2)
+library(ggfortify)
+library(broom)
+library(dplyr)
+```
+
+## Evaluating Model Assumptions
+```{r cars}
+#Loading documents
+load("./gen/analysis/input/comparison_dataset_complete.RData") 
+phones <- comparison_dataset_complete
+
+# estimate linear model
+mdl_phones <- lm(price ~ star_rating, data=phones)
+
+# check linear model assumptions
+autoplot(
+  mdl_phones,
+  which = 1:3,
+  nrow = 1,
+  ncol = 3
+)
+```
+
+## Outlier Screening 
+```{r pressure, echo=FALSE}
+leverage_influence <- mdl_phones %>%
+    augment() %>%
+    select(price, star_rating, leverage = .hat, cooks_dist = .cooksd) %>%
+    arrange(desc(cooks_dist)) %>%
+print(leverage_influence)
+```
+
+## TRY AND ERROR MAYBE RELLEVANT IN A SEC
+```{r pressure, echo=FALSE}
+mdl_phones_cleaned <- mdl_phones %>% filter(leverage_influence) 
+```
+
+```{r pressure, echo=FALSE}
+influential <- as.numeric(names(cooksd)[(cooksd > 4*mean(cooksd, na.rm=T))])  # influential row numbers
+head(ozone[influential, ])  # influential observations.
+
+
+mod <- lm(ozone_reading ~ ., data=ozone)
+cooksd <- cooks.distance(mod)
+
+leverage_influence <- ldply(leverage_influence, coef)
+
+mdl_phones[!(mdl_phones$price %in% leverage_influence$price),]
+
+mdl_phones_cleaned <- mdl_phones[-which(mdl_phones$price %in% leverage_influence$price),] 
+
+x_out_rm <- x[!x %in% boxplot.stats(x)$out]
+
+mdl_phones_cleaned <- mdl_phones %>% anti_join(mdl_phones, leverage_influence, by = "star_rating" & "price")
+
+mdl_phones[mdl_phones$price == leverage_influence$price,]
+
+#removing outliers
+
+cooksd <- cooks.distance(mdl_phones)
+influential <- as.numeric(names(cooksd)[(cooksd > (4/nrow(comparison_dataset_complete)))])
+
+
+```
+```{r pressure, echo=FALSE}
+mdl_phones_cleaned <- mdl_phones %>% filter(leverage_influence) 
+```
+
+
+## Model Reporting 
+```{r pressure, echo=FALSE}
+library(stargazer)
+
+stargazer(mdl_phones,
+          title = "Figure 1: Price vs Rating ",
+          dep.var.caption = "Rating (1-5)",  
+          dep.var.labels = "",  
+          covariate.labels = c("Price"),  
+          column.labels = c("Full model"),
+          notes.label = "Significance levels",  
+          type="text",
+          out="output.html"  
+          )
+```
+
+## Visualize Linear Relationships
+```{r pressure, echo=FALSE}
+library(ggplot2)
+
+ggplot(phones, aes(price, star_rating)) +
+  geom_point(alpha = 0.5) +  
+  geom_smooth(method = "lm", se = FALSE, aes(color="Full model")) +
+  #geom_smooth(method = "lm", se = FALSE, data = cars_cleaned,  aes(color="Outlier excluded"))  +
+  labs(x = "Price (€) ", y = "Star rating") +  
+  ggtitle("Figure 2: Linear trend between price and star rating") +
+  scale_colour_manual(name="Legend", values=c("red", "blue"))
+```
