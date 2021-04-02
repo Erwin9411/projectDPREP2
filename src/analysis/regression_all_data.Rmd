@@ -5,6 +5,8 @@ date: "2-4-2021"
 output: html_document
 ---
 
+# **Analyze complete dataset **
+
 ```{r}
 #Loading packages 
 library(ggplot2)
@@ -13,7 +15,7 @@ library(broom)
 library(dplyr)
 ```
 
-## Evaluating Model Assumptions
+### Evaluating Model Assumptions
 ```{r}
 #Loading documents
 load("../../gen/analysis/input/complete_dataset.RData") 
@@ -31,16 +33,16 @@ autoplot(
 )
 ```
 
-## Outlier Screening 
+### Outlier Screening 
 ```{r}
 leverage_influence <- mdl_phones %>%
     augment() %>%
     select(price, star_rating, leverage = .hat, cooks_dist = .cooksd) %>%
-    arrange(desc(cooks_dist)) %>% 
-    print(leverage_influence)
+    arrange(desc(cooks_dist))
+print(leverage_influence)
 ```
 
-## Model Reporting 
+### Model Reporting 
 ```{r}
 library(stargazer)
 
@@ -56,7 +58,7 @@ stargazer(mdl_phones,
           )
 ```
 
-## Visualize Linear Relationships
+### Visualize Linear Relationships
 ```{r}
 library(ggplot2)
 
