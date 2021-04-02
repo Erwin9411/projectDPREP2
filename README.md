@@ -30,53 +30,40 @@ To conclude, price does have a significant impact on product ratings for smartph
 
 ## Repository overview
 
+There is a makefile that has to be runned to start to make all the maps up to date. This will also result in the creation of the map 'gen'. More information on the running of the make file can be found in the running instructions paragraph. The maps that can be found in the repository are:
+
 ### Data
 
 In the 'data' map the data from both bol.com and Amazon is stored. The data that is used are the csv-files derived from the webscraper.
 
 ### Gen
-tekstjaktja;ietj;air
+The gen map is the generated map with the outputs of the analysis (e.g. regression analysis output). This map is splitted into two sub maps:
+- In the map 'data-preperation' the input and the output is stored here. 
+- In the map 'analysis' the output from the analasys of the data is stored.
 
 ### Source
-In the map source ('src') the code to preparate the data is stored. This map is splitted into two maps:
+In the map source ('src') the code to preparate the data is stored. This map is splitted into two sub maps:
 - In the map 'data-preperation' the code is stored for the cleaning and preparation of the data. 
 - In the map 'analysis' the code is stored for the analysis of the data.
 
-There is a makefile that has to be runned to start to make all the maps up to date. This will also result in the creation of the map 'gen'. More information on the running of the make file can be found in the running instructions paragraph.
-
-
 ## Running instructions
 
-Explain to potential users how to run/replicate your workflow. Touch upon, if necessary, the required input data, which (secret) credentials are required (and how to obtain them), which software tools are needed to run the workflow (including links to the installation instructions), and how to run the workflow. Make use of subheaders where appropriate.
-pip https://pypi.org/project/pip/
-
-Rstudio https://tilburgsciencehub.com/get/r
-The following packages:
-ggplot
-ggplot2
-ggfortify
-broom
-dplyr
-tibble
-readr
-stringr
-tidyverse
-tidyr
-stargazer
-
-The required data is already available, make connected. 
-
-
-Git https://tilburgsciencehub.com/get/git
-
-Make https://tilburgsciencehub.com/get/make
-
-
-To run/replicate the workflow you have to run the makefile. 
+To run the files Make is needed (https://tilburgsciencehub.com/get/make). The directory works with make which should be runned. Also Rstudio is needed (https://tilburgsciencehub.com/get/r) to run the R-files. Within R the following packages need to be installed:
+-ggplot
+-ggplot2
+-ggfortify
+-broom
+-dplyr
+-tibble
+-readr
+-stringr
+-tidyverse
+-tidyr
+-stargazer
+To  install these packages, pip is recommended (https://pypi.org/project/pip/).
+Make sure to run the Make-file.
 
 ## More resources
-
-Point interested users to any related literature and/or documentation.
 
 An aspect that is related to this research is the price-quality inference. This is a psychological aspect of pricing where there is a preference for a more expensive option. The aspect states that a higher price signals that the perceived quality is better (Smith, 2021). This is an aspect that might be related to the research and therefore might be interesting for interested users. 
 
@@ -87,8 +74,4 @@ This project is performed by project group 8 of the Data Preperation and Worklfo
 ## Bibliography
 
 Smith, R. (2021). Strategic Pricing., (pp. 46-53). Tilburg.
-Tilburg sciencehub...
-
-
-
-
+Tilburg University. (2021). Tilburg Science Hub. Retrieved from Tilburg Science Hub: https://tilburgsciencehub.com/
