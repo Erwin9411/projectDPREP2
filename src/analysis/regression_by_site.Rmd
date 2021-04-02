@@ -1,0 +1,129 @@
+---
+title: "Analyze per site"
+author: "Group 8"
+date: "2-4-2021"
+output: html_document
+---
+
+# **Analyze amazon.nl**
+```{r}
+#Loading packages 
+library(ggplot2)
+library(ggfortify)
+library(broom)
+library(dplyr)
+```
+
+### Evaluating Model Assumptions
+```{r}
+#Loading documents
+load("../../gen/analysis/input/data_amazon.RData") 
+phones <- data_amazon
+
+# estimate linear model
+mdl_phones <- lm(price ~ star_rating, data=phones)
+
+# check linear model assumptions
+autoplot(
+  mdl_phones,
+  which = 1:3,
+  nrow = 1,
+  ncol = 3
+)
+```
+
+### Outlier Screening 
+```{r}
+leverage_influence <- mdl_phones %>%
+    augment() %>%
+    select(star_rating, price, leverage = .hat, cooks_dist = .cooksd) %>%
+    arrange(desc(cooks_dist)) 
+print(leverage_influence)
+```
+### Model Reporting 
+```{r}
+library(stargazer)
+
+stargazer(mdl_phones,
+          title = "Figure 1: Price vs Rating Amazon ",
+          dep.var.caption = "Rating (1-5)",  
+          dep.var.labels = "",  
+          covariate.labels = c("Price (€)"),  
+          column.labels = c("Full model"),
+          notes.label = "Significance levels",  
+          type="text",
+          out="output.html"  
+          )
+```
+
+### Visualize Linear Relationships
+```{r}
+library(ggplot2)
+
+ggplot(phones, aes(price, star_rating)) +
+  geom_point(alpha = 0.5) +  
+  geom_smooth(method = "lm", se = FALSE, aes(color="Full model")) +
+  #geom_smooth(method = "lm", se = FALSE, data = cars_cleaned,  aes(color="Outlier excluded"))  +
+  labs(x = "Price (€) ", y = "Star rating") +  
+  ggtitle("Figure 2: Linear trend between price and star rating Amazon") +
+  scale_colour_manual(name="Legend", values=c("red", "blue"))
+```
+
+
+# **Analyze *bol.com**
+
+### Evaluating Model Assumptions
+```{r}
+#Loading documents
+load("../../gen/analysis/input/data_bol.RData") 
+phones <- data_bol
+
+# estimate linear model
+mdl_phones <- lm(price ~ star_rating, data=phones)
+
+# check linear model assumptions
+autoplot(
+  mdl_phones,
+  which = 1:3,
+  nrow = 1,
+  ncol = 3
+)
+```
+
+### Outlier Screening 
+```{r}
+leverage_influence <- mdl_phones %>%
+    augment() %>%
+    select(star_rating, price, leverage = .hat, cooks_dist = .cooksd) %>%
+    arrange(desc(cooks_dist)) 
+print(leverage_influence)
+```
+
+### Model Reporting 
+```{r}
+library(stargazer)
+
+stargazer(mdl_phones,
+          title = "Figure 1: Price vs Rating bol.com ",
+          dep.var.caption = "Rating (1-5)",  
+          dep.var.labels = "",  
+          covariate.labels = c("Price (€)"),  
+          column.labels = c("Full model"),
+          notes.label = "Significance levels",  
+          type="text",
+          out="output.html"  
+          )
+```
+
+### Visualize Linear Relationships
+```{r}
+library(ggplot2)
+
+ggplot(phones, aes(price, star_rating)) +
+  geom_point(alpha = 0.5) +  
+  geom_smooth(method = "lm", se = FALSE, aes(color="Full model")) +
+  #geom_smooth(method = "lm", se = FALSE, data = cars_cleaned,  aes(color="Outlier excluded"))  +
+  labs(x = "Price (€) ", y = "Star rating") +  
+  ggtitle("Figure 2: Linear trend between price and star rating bol.com") +
+  scale_colour_manual(name="Legend", values=c("red", "blue"))
+```
