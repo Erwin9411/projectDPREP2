@@ -1,12 +1,12 @@
-# Short project title
+# The E-Commerce Retail Market - Bol.com versus Amazon.nl
 
-__Long project title, e.g., research question__
+__Bol.com and Amazon.nl on the Dutch E-commerce retail market. Does price influence perceived quality?__
 
 ## Motivation
 
 Motivate your research question or business problem. Clearly explain which problem is solved.
 
-Amazon.nl is making its appearance on the webshop market in the Netherlands. Bol.com is one of the bigger parties on the Dutch market at the moment.  Both companies sell smartphones. The goal of this project is to look if the different brands differ in average price / average star rating on both e-commerce sites. 
+Amazon.nl is making its appearance on the e-commerce retail market in the Netherlands. Bol.com is one of the  bigger parties on the Dutch e-commerce retail market at  the moment. Both companies sell a wide variety of  products including smartphones. The goal of this project is to look if the price of a product has influence on the perceived quality of that product. More precisely if there is a correlation between price and star rating for bol.com and Amazon.nl
 
 ## Method and results
 
@@ -16,7 +16,8 @@ Second, summarize your results concisely. Make use of subheaders where appropria
 
 ## Repository overview
 
-The README file
+Provide an overview of the directory structure and files.
+The README file?
 
 ## Running instructions
 
@@ -27,8 +28,6 @@ Explain to potential users how to run/replicate your workflow. Touch upon, if ne
 Point interested users to any related literature and/or documentation.
 
 ## About
-
-((Explain who has contributed to the repository. You can say it has been part of a class you've taken at Tilburg University.))
 
 This project is performed by project group 8 of the Data Preperation and Worklfow Managment course of the TISEM department of Tilburg University. The project is done in the spring 2021 version of the course. The project was part of a team project performed by Marketing Analytics master students. Professor Hannes Datta contributed by providing helpful feedback during project feedback meetings.  
 
