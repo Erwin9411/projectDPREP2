@@ -3,32 +3,25 @@
 # - Careful with spaces! If use \ to split to multiple lines, cannot have a space after \
 
 # OVERALL BUILD RULES
-all: data_cleaned results paper
-#paper: gen/paper/output/paper.pdf
+all: data_cleaned analyze results 
 data_cleaned: gen/data-preparation/output/data_bol_comparison.RData gen/data-preparation/output/data_amazon_comparison.RData
-results: gen/analysis/output/model_results.RData
+analyze: gen/analysis/input/complete_dataset.RData gen/analysis/input/data_amazon.RData gen/analysis/input/data_bol.RData
+results: gen/analysis/output/regression_all_data.html gen/analysis/output/regression_amazon.html
 .PHONY: clean
 
 # INDIVIDUAL RECIPES
 
-# Generate paper/text
-#gen/paper/output/paper.pdf: gen/paper/output/table1.tex \
-				#src/paper/paper.tex
-	#pdflatex -interaction=batchmode -output-directory='gen/paper/output/' 'src/paper/paper.tex'
-	#pdflatex -interaction=batchmode -output-directory='gen/paper/output/' 'src/paper/paper.tex'
-	#pdflatex -output-directory='gen/paper/output/' 'src/paper/paper.tex'
-# Note: runs pdflatex multiple times to have correct cross-references
-
-# Generate tables
-#gen/paper/output/table1.tex: gen/analysis/output/model_results.RData \
-#				src/paper/tables.R
-#	Rscript src/paper/tables.R
-
-# Run analysis
-gen/analysis/output/model_results.RData: gen/data-preparation/output/comparison_dataset_complete.RData \
-						src/analysis/analyze.R
+#Inspect data
+gen/analysis/output/regression_all_data.html gen/analysis/output/regression_amazon.html: gen/analysis/input/complete_dataset.RData \
+						src/analysis/regression_all_data.Rmd \
+						gen/analysis/input/data_amazon.RData \
+						src/analysis/regression_amazon.Rmd 
+	    R -e "rmarkdown::render('src/analysis/regression_all_data.Rmd', output_file = '../../gen/analysis/output/regression_all_data.html')"
+	    R -e "rmarkdown::render('src/analysis/regression_amazon.Rmd', output_file = '../../gen/analysis/output/regression_amazon.html')"
+        
+# Start analyse
+gen/analysis/input/complete_dataset.RData: gen/data-preparation/output/comparison_dataset_complete.RData  
 	Rscript src/analysis/update_input.R
-	Rscript src/analysis/analyze.R
 
 # Clean data
 gen/data-preparation/output/data_bol_comparison.RData gen/data-preparation/output/data_amazon_comparison.RData: data/bol/data_bol.csv \
