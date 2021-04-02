@@ -1,6 +1,7 @@
 # The E-Commerce Retail Market - bol.com versus Amazon.nl
 
 __Bol.com and Amazon.nl on the Dutch E-commerce retail market.__ 
+
 __To what extent does the product price of smartphones on bol.com and Amazon.nl have an impact on their perceived quality?__
 
 ## Motivation
