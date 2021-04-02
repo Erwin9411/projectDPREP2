@@ -4,9 +4,8 @@ __Bol.com and Amazon.nl on the Dutch E-commerce retail market. Does price influe
 
 ## Motivation
 
-Motivate your research question or business problem. Clearly explain which problem is solved.
-
-Amazon.nl is making its appearance on the e-commerce retail market in the Netherlands. Bol.com is one of the  bigger parties on the Dutch e-commerce retail market at  the moment. Both companies sell a wide variety of  products including smartphones. The goal of this project is to look if the price of a smartphone has influence on the perceived quality of that smartphone. More precisely if there is a correlation between price and star rating for smartphones for bol.com and Amazon.nl.
+Amazon.nl is making its appearance on the e-commerce retail market in the Netherlands. Bol.com is one of the  bigger parties on the Dutch e-commerce retail market at  the moment. Both companies sell a wide variety of  products including smartphones. The goal of this project is to look if the price of a smartphone has influence on the perceived quality of that smartphone. The perceived quality will be measured by star rating. 
+So the research question will be:  "To what extent does the product price of smartphones on bol.com and Amazon.nl have an impact on their perceived quality?"
 
 ## Method and results
 
@@ -14,7 +13,24 @@ First, introduce and motivate your chosen method, and explain how it contributes
 
 Second, summarize your results concisely. Make use of subheaders where appropriate.
 
-The method that is chosen is linear regression. This method is used to predict the influence of the independent variable price on the dependend variable perceived quality. Perceived quality is expressed in the star-rating. By using linear regression there can, or can not, be concluded if there is a correlation between the variables and what the exact linear regression is. With this information the research question is answered. 
+The method that is chosen is linear regression. This method is used to predict the influence of the independent variable price on the dependent variable perceived quality. Perceived quality is expressed in the star-rating. By using linear regression there can, or can not, be concluded if there is a correlation between the variables and what the exact linear regression is. With this information the research question is answered. 
+
+
+normale goedkopere telefoon hogere rating krijgen, extremer bij amaozn dan bij bol.com
+bij bol.com ook duurdere telefoons hoge rating krijgen maar meer dan bij amazon
+
+wel lichte stijgende lijn bij beide firms
+bij bol.com iets hoger
+
+r2 verklaart heel weinig, bij amazon nog lager dan bol.com. 0
+
+Dus variantie is niet uitgelegd
+
+niet aantal reviews meegenomen dus niet heel betrouwbaar
+
+
+
+
 
 ## Repository overview
 
