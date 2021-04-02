@@ -5,7 +5,7 @@ date: "2-4-2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r}
 #Loading packages 
 library(ggplot2)
 library(ggfortify)
@@ -16,8 +16,8 @@ library(dplyr)
 ## Evaluating Model Assumptions
 ```{r}
 #Loading documents
-load("./gen/analysis/input/comparison_dataset_complete.RData") 
-phones <- comparison_dataset_complete
+load("../../gen/analysis/input/complete_dataset.RData") 
+phones <- complete_dataset
 
 # estimate linear model
 mdl_phones <- lm(price ~ star_rating, data=phones)

@@ -4,6 +4,8 @@
 
 ####### Create Gen directory ######
 dir.create("./gen/analysis/input", recursive = TRUE)
+dir.create("./gen/analysis/temp", recursive = TRUE)
+dir.create("./gen/analysis/output", recursive = TRUE)
 
 ###### Read in data ################
 load("./gen/data-preparation/output/comparison_dataset_complete.RData") 
@@ -16,4 +18,4 @@ data_bol <- bol_comparison_data
 ###### Save data file ######
 save(complete_dataset,file="./gen/analysis/input/complete_dataset.RData")
 save(data_amazon,file="./gen/analysis/input/data_amazon.RData") 
-save(data_bol, file="./gen/analysis/input/data_bol.RData") 
+save(data_bol,file="./gen/analysis/input/data_bol.RData") 

@@ -1,5 +1,5 @@
 ---
-title: "Analyse amazon.nl"
+title: "Analyze bol.com"
 author: "Group 8"
 date: "2-4-2021"
 output: html_document
@@ -16,7 +16,7 @@ library(dplyr)
 ## Evaluating Model Assumptions
 ```{r}
 #Loading documents
-load("./gen/analysis/input/data_bol.RData") 
+load("../../gen/analysis/input/data_bol.RData") 
 phones <- data_bol
 
 # estimate linear model
@@ -44,7 +44,7 @@ leverage_influence <- mdl_phones %>%
 library(stargazer)
 
 stargazer(mdl_phones,
-          title = "Figure 1: Price vs Rating Amazon ",
+          title = "Figure 1: Price vs Rating bol.com ",
           dep.var.caption = "Rating (1-5)",  
           dep.var.labels = "",  
           covariate.labels = c("Price (€)"),  
@@ -64,7 +64,7 @@ ggplot(phones, aes(price, star_rating)) +
   geom_smooth(method = "lm", se = FALSE, aes(color="Full model")) +
   #geom_smooth(method = "lm", se = FALSE, data = cars_cleaned,  aes(color="Outlier excluded"))  +
   labs(x = "Price (€) ", y = "Star rating") +  
-  ggtitle("Figure 2: Linear trend between price and star rating Amazon") +
+  ggtitle("Figure 2: Linear trend between price and star rating bol.com") +
   scale_colour_manual(name="Legend", values=c("red", "blue"))
 ```
 
