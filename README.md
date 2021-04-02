@@ -11,7 +11,7 @@ So the research question will be:  "To what extent does the product price of sma
 
 ### Method
 
-The method that is chosen is linear regression. This method is used to predict the influence of the independent variable price on the dependent variable perceived quality. Perceived quality is expressed in the star-rating. By using linear regression there can, or can not, be concluded if there is a correlation between the variables and what the exact linear regression is. With this information the research question is answered. 
+The method that is chosen is linear regression. This method is used to predict the influence of the independent variable price on the dependent variable perceived quality. Perceived quality is expressed in the star-rating. By using linear regression there can, or cannot, be concluded if there is a correlation between the variables and what the exact linear regression is. With this information the research question is answered. 
 
 ### Results
 
@@ -30,25 +30,25 @@ To conclude, price does have a significant impact on product ratings for smartph
 
 ## Repository overview
 
-There is a makefile that has to be runned to start to make all the maps up to date. This will also result in the creation of the map 'gen'. More information on the running of the make file can be found in the running instructions paragraph. The maps that can be found in the repository are:
+There is a Make-file that has to run to make all the maps up to date. This will also result in the creation of the map 'gen'. More information on the running of the make file can be found in the running instructions paragraph. The maps that can be found in the repository are:
 
 ### Data
 
-In the 'data' map the data from both bol.com and Amazon is stored. The data that is used are the csv-files derived from the webscraper.
+In the 'data' map the data from both bol.com and Amazon is stored. The data that is used are the csv-files derived from the web scraper.
 
 ### Gen
-The gen map is the generated map with the outputs of the analysis (e.g. regression analysis output). This map is splitted into two sub maps:
-- In the map 'data-preperation' the input and the output is stored here. 
-- In the map 'analysis' the output from the analasys of the data is stored.
+The gen map is the generated map with the outputs of the analysis (e.g. regression analysis output). This map is separated into two sub maps:
+- In the map 'data-preparation' the input and the output is stored here. 
+- In the map 'analysis' the output from the analysis of the data is stored.
 
 ### Source
-In the map source ('src') the code to preparate the data is stored. This map is splitted into two sub maps:
-- In the map 'data-preperation' the code is stored for the cleaning and preparation of the data. 
+In the map source ('src') the code to prepare the data is stored. This map is separated into two sub maps:
+- In the map 'data-preparation' the code is stored for the cleaning and preparation of the data. 
 - In the map 'analysis' the code is stored for the analysis of the data.
 
 ## Running instructions
 
-To run the files Make is needed (https://tilburgsciencehub.com/get/make). The directory works with make which should be runned. Also Rstudio is needed (https://tilburgsciencehub.com/get/r) to run the R-files. Within R the following packages need to be installed:
+To run the files Make is needed (https://tilburgsciencehub.com/get/make). The directory works with make which should be run. Also R-studio is needed (https://tilburgsciencehub.com/get/r) to run the R-files. Within R the following packages need to be installed:
 -ggplot
 -ggplot2
 -ggfortify
@@ -69,7 +69,7 @@ An aspect that is related to this research is the price-quality inference. This 
 
 ## About
 
-This project is performed by project group 8 of the Data Preperation and Worklfow Managment course of the TISEM department of Tilburg University. The project is done in the spring 2021 version of the course. The project was part of a team project performed by Marketing Analytics master students. Professor Hannes Datta contributed by providing helpful feedback during project feedback meetings. 
+This project is performed by project group 8 of the Data Preparation and Workflow Management course of the TISEM department of Tilburg University. The project is done in the spring 2021 version of the course. The project was part of a team project performed by Marketing Analytics master students. Professor Hannes Datta contributed by providing helpful feedback during project feedback meetings. 
 
 ## Bibliography
 
