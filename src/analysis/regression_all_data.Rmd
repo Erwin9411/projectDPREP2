@@ -38,8 +38,8 @@ autoplot(
 leverage_influence <- mdl_phones %>%
     augment() %>%
     select(price, star_rating, leverage = .hat, cooks_dist = .cooksd) %>%
-    arrange(desc(cooks_dist)) %>% 
-    print(leverage_influence)
+    arrange(desc(cooks_dist))
+print(leverage_influence)
 ```
 
 ### Model Reporting 
