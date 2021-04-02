@@ -28,16 +28,21 @@ As for the model fit, both the models have a relatively low R square (0.061 for 
 
 To conclude, price does have a significant impact on product ratings for smartphones on bol.com and Amazon.nl. However, covariates have not been taken into account since this is not in the scope of this research. These covariates are variables that influence the outcome of this model, and have an impact on star rating as well. These include product specifications, year, brand, product version, perceived brand positioning and so on. For future research, it is advised that these variables are taken into account.
 
-veel meer factoren die een rol spelen die de perceived quality beinvloeden, deze covvariance zijn niet meegenomen in het onderzoek
-Vervolg onderzoek dit wel mee in acht nemen: bijvoorbeld, product specificaties, jaar van uitbrengen, versie, merk, marketshare, perceived brand positioning, expectations
-
 ## Repository overview
 
-Provide an overview of the directory structure and files.
+### Data
 
-There is a makefile that has to be runned to start to make all the maps up to date. This will result in the creation of the map 'gen'.
-In the data map the data from both bol.com and Amazon is stored. THe csv files from the webscraper.
-In the map source ('src') the code to preparate the data is stored. in 'data-preperation' the coude is store for the cleaning and preparation of the data. In the analysis are the regressions stored
+In the 'data' map the data from both bol.com and Amazon is stored. The data that is used are the csv-files derived from the webscraper.
+
+### Gen
+tekstjaktja;ietj;air
+
+### Source
+In the map source ('src') the code to preparate the data is stored. This map is splitted into two maps:
+- In the map 'data-preperation' the code is stored for the cleaning and preparation of the data. 
+- In the map 'analysis' the code is stored for the analysis of the data.
+
+There is a makefile that has to be runned to start to make all the maps up to date. This will also result in the creation of the map 'gen'. More information on the running of the make file can be found in the running instructions paragraph.
 
 
 ## Running instructions
